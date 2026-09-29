@@ -20,21 +20,25 @@ def is_model_available(model_path=None) -> bool:
 def load_yolo_model(weight_path: str, mtime: float = 0.0):
     """Load a YOLO checkpoint once. `mtime` busts the cache when best.pt is swapped.
 
-    Returns None on any failure (missing file, corrupt weights, ultralytics absent).
+    Returns (model, None) on success or (None, error_text) on any failure, so the UI
+    can tell "file missing" apart from "file present but failed to load".
     """
     try:
+        size = Path(weight_path).stat().st_size
+        if size < 1_000_000:
+            return None, f"best.pt is only {size} bytes (a Git LFS pointer or truncated file?)"
         from ultralytics import YOLO
 
-        return YOLO(weight_path)
-    except Exception:
-        return None
+        return YOLO(weight_path), None
+    except Exception as e:
+        return None, f"{type(e).__name__}: {e}"
 
 
 def load_default_model():
-    """Load models/best.pt if present, else None."""
+    """Load models/best.pt. Returns (model, error); model is None if missing or failed."""
     path = get_model_path()
     if path is None:
-        return None
+        return None, "models/best.pt not found"
     return load_yolo_model(path, Path(path).stat().st_mtime)
 
 

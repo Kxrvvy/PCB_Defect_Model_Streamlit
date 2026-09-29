@@ -21,9 +21,24 @@ def test_dev_app_demo_mode_and_presets():
     assert at.session_state["conf_pct"] == 50 and not at.exception
 
 
-def test_prod_app_falls_back_to_mock_without_model():
+def test_prod_app_falls_back_to_mock_without_model(monkeypatch, tmp_path):
+    import utils.model_utils as mu
+
+    monkeypatch.setattr(mu, "MODEL_PATH", tmp_path / "missing.pt")
     at = _run("app.py")
     assert any("Model not available" in w.value for w in at.warning)
+    assert "not found" in at.code[0].value
+
+
+def test_prod_app_reports_load_failure(monkeypatch, tmp_path):
+    import utils.model_utils as mu
+
+    bad = tmp_path / "best.pt"
+    bad.write_bytes(b"x" * 100)
+    monkeypatch.setattr(mu, "MODEL_PATH", bad)
+    mu.load_yolo_model.clear()
+    at = _run("app.py")
+    assert "100 bytes" in at.code[0].value
 
 
 def test_exports():

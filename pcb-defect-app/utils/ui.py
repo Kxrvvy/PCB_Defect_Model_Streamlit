@@ -201,7 +201,7 @@ def run_app(mock_only: bool = False):
     st.session_state.setdefault("history", [])
     st.session_state.setdefault("current", None)
 
-    model = None if mock_only else load_default_model()
+    model, load_error = (None, None) if mock_only else load_default_model()
     ctx = {
         "model": model,
         "model_key": str(MODEL_PATH.stat().st_mtime) if model is not None else "mock",
@@ -217,6 +217,8 @@ def run_app(mock_only: bool = False):
     elif ctx["mock"]:
         st.warning("⚠️ Model not available. Place `best.pt` in `models/` for real inference. "
                    "Showing **simulated** predictions meanwhile.")
+        if load_error:
+            st.code(load_error, language=None)
 
     mode = _sidebar(ctx)
     {"Analyze Upload": _upload_mode, "Demo Mode": _demo_mode,
