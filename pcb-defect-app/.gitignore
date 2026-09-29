@@ -1,0 +1,14 @@
+.venv/
+.venv312/
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+
+# Dataset images and training exports (Roboflow project license is "Private")
+test_images/
+training_info/
+
+# models/best.pt IS committed (52 MB, under GitHub's 100 MB limit); other weights are not
+models/*.pt
+!models/best.pt
