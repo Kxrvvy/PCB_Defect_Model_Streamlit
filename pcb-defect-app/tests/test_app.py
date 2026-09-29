@@ -1,9 +1,9 @@
 from streamlit.testing.v1 import AppTest
 
-from utils.export import export_batch_csv, export_comparison_pdf, export_csv, export_pdf
-from utils.inference import analyze
-from utils.model_utils import get_class_names
-from utils.sample_images import get_sample_images
+from pcbdet.export import export_batch_csv, export_comparison_pdf, export_csv, export_pdf
+from pcbdet.inference import analyze
+from pcbdet.model_utils import get_class_names
+from pcbdet.sample_images import get_sample_images
 
 
 def _run(script):
@@ -22,7 +22,7 @@ def test_dev_app_demo_mode_and_presets():
 
 
 def test_prod_app_falls_back_to_mock_without_model(monkeypatch, tmp_path):
-    import utils.model_utils as mu
+    import pcbdet.model_utils as mu
 
     monkeypatch.setattr(mu, "MODEL_PATH", tmp_path / "missing.pt")
     at = _run("app.py")
@@ -31,7 +31,7 @@ def test_prod_app_falls_back_to_mock_without_model(monkeypatch, tmp_path):
 
 
 def test_prod_app_reports_load_failure(monkeypatch, tmp_path):
-    import utils.model_utils as mu
+    import pcbdet.model_utils as mu
 
     bad = tmp_path / "best.pt"
     bad.write_bytes(b"x" * 100)

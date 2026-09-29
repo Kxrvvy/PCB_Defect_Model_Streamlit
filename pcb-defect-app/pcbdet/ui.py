@@ -6,13 +6,13 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 
-from utils.export import (export_batch_csv, export_comparison_pdf, export_csv,
+from pcbdet.export import (export_batch_csv, export_comparison_pdf, export_csv,
                           export_pdf, get_pdf_filename)
-from utils.inference import analyze
-from utils.model_utils import (MODEL_PATH, get_class_names, get_device,
+from pcbdet.inference import analyze
+from pcbdet.model_utils import (MODEL_PATH, get_class_names, get_device,
                                load_default_model)
-from utils.sample_images import get_sample_images
-from utils.visualization import create_metrics, format_results_table
+from pcbdet.sample_images import get_sample_images
+from pcbdet.visualization import create_metrics, format_results_table
 
 MODES = ["Analyze Upload", "Demo Mode", "Batch", "Comparison"]
 PRESETS = {"Low (25%)": 25, "Medium (50%)": 50, "High (75%)": 75}

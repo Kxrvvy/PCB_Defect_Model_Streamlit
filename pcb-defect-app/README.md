@@ -21,8 +21,8 @@ CSV + PDF export, metrics dashboard, model info, session history.
 
 ## Layout
 
-`app.py` / `app_dev.py` are thin entry points over `utils/ui.py`. Logic lives in
-`utils/{model_utils,inference,visualization,export,sample_images}.py`.
+`app.py` / `app_dev.py` are thin entry points over `pcbdet/ui.py`. Logic lives in
+`pcbdet/{model_utils,inference,visualization,export,sample_images}.py`.
 
 ## Tests
 
