@@ -11,7 +11,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import Image as RLImage
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
-from utils.visualization import create_metrics
+from pcbdet.visualization import create_metrics
 
 CSV_COLUMNS = ["Image Filename", "Defect Type", "Confidence", "X1", "Y1", "X2", "Y2", "Area (px²)", "Timestamp"]
 

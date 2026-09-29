@@ -8,5 +8,5 @@
      Use it locally/other hosts, or
    - commit the weights with Git LFS (GitHub blocks plain files >100 MB; a ~128 MB `best.pt`
      needs LFS or a smaller export), removing `models/*.pt` from `.gitignore`, or
-   - add a download-on-first-run step in `utils/model_utils.py` reading a URL from `st.secrets`.
+   - add a download-on-first-run step in `pcbdet/model_utils.py` reading a URL from `st.secrets`.
 4. Free tier is CPU-only with ~1 GB RAM; expect ~8–15 s per image and keep batches small.
